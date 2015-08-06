@@ -18,12 +18,10 @@ public class TickerLookupApplication {
 
     public static void main(String[] args) throws Exception{
         ActorSystem tickerSystem = ActorSystem.create("TickerLookupApp");
-       ActorRef master = tickerSystem.actorOf(Props.create(MasterActor.class));
-//       ActorRef httpActor = tickerSystem.actorOf(new Pro(HttpActor.class,).withRouter(new FromConfig()), "httpActor1");
-
+        ActorRef master = tickerSystem.actorOf(Props.create(MasterActor.class));
         SymbolMsg tickerMsg = new SymbolMsg();
         tickerMsg.addAll(getSymbolList(100));
-       master.tell(tickerMsg,master);
+        master.tell(tickerMsg, master);
 
     }
     

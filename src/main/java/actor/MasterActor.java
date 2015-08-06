@@ -32,20 +32,19 @@ public class MasterActor extends UntypedActor{
                     "httpActor");
 
 
-//    ActorRef httpActor = getContext().actorOf(Props.create(HttpActor.class),"httpActor");
     ActorRef jsonActor = getContext().actorOf(Props.create(JsonActor.class), "jsonActor");
     ActorRef formattorActor = getContext().actorOf(Props.create(FormattorActor.class), "formattorActor");
 
 
 
-//    static Duration duration = new FiniteDuration(100, MILLISECONDS);
-    private static SupervisorStrategy strategy = new OneForOneStrategy(10,
+    private  SupervisorStrategy strategy = new OneForOneStrategy(10,
             Duration.create("1 minute"),
             new Function<Throwable, SupervisorStrategy.Directive>() {
 
                 @Override
                 public SupervisorStrategy.Directive apply(Throwable t) {
                     if (t instanceof ArithmeticException) {
+                        responses--;
                         return resume();
                     } else if (t instanceof NullPointerException) {
                         return restart();
